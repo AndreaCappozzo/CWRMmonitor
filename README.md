@@ -1,2 +1,30 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # CWRMmonitor
-R package providing graphical and computational tools to guide parameter choice for the cluster weighted robust model. Associated paper Cappozzo, Garcìa Escudero, Greselin, Mayo-Iscar (2022+) Graphical and computational tools to guide parameter choice for the cluster weighted robust model. 
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+R package providing graphical and computational tools to guide parameter
+choice for the cluster weighted robust model. Associated paper Cappozzo,
+Garcìa Escudero, Greselin, Mayo-Iscar (2022+) Graphical and
+computational tools to guide parameter choice for the cluster weighted
+robust model.
+
+## Installation
+
+You can install the development version of CWRMmonitor from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("AndreaCappozzo/CWRMmonitor")
+```
+
+## Package usage
+
+A tutorial on how to use the package can be found in the supplementary
+material of Cappozzo, Garcìa Escudero, Greselin, Mayo-Iscar (2022+)
+Graphical and computational tools to guide parameter choice for the
+cluster weighted robust model.

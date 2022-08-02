@@ -20,6 +20,7 @@ Imports:
     mvtnorm,
     plyr,
     purrr,
+    scales,
     stats,
     tibble,
     tidyr

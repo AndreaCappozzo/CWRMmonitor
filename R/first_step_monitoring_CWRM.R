@@ -43,11 +43,11 @@ first_step_monitoring_CWRM <-
     ggplot2::ggplot(ggplot2::aes(x=trim_level,y=value,fill=name)) +
     ggplot2::geom_col() +
     ggplot2::facet_wrap(~title) +
-    ggplot2::scale_x_continuous(breaks = alpha) +
+    ggplot2::scale_x_continuous(breaks = alpha,labels = scales::number_format(accuracy = 0.001)) +
     ggplot2::labs(x=quote(alpha), y="", fill="G") +
     ggplot2::scale_fill_manual(breaks = names(cluster_prop_colors[-1]), values = cluster_prop_colors,
     ) +
-    ggplot2::theme(legend.position = "bottom")
+    ggplot2::theme(legend.position = "bottom",axis.text.x = ggplot2::element_text(angle = 45,hjust = 1))
 
   BETA_df <- vector(mode = "list",length = ncol(best_alpha_wise$model[[1]]$b))
 
@@ -91,7 +91,7 @@ first_step_monitoring_CWRM <-
     ggplot2::geom_point() +
     ggplot2::geom_line(ggplot2::aes(lty=group)) +
     ggplot2::facet_grid(rows = dplyr::vars(param),labeller = ggplot2::label_parsed,scales = "free") +
-    ggplot2::scale_x_continuous(breaks = alpha) +
+    ggplot2::scale_x_continuous(breaks = alpha,labels = scales::number_format(accuracy = 0.001)) +
     ggplot2::labs(x=quote(alpha), y="", col="G", lty="G") +
     ggplot2::scale_color_brewer(palette = "Set2") +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45,hjust = 1),
@@ -111,9 +111,10 @@ first_step_monitoring_CWRM <-
     ggplot2::geom_line()+
     ggplot2::geom_point()+
     ggplot2::scale_y_continuous(limits = c(0.5,1)) +
-    ggplot2::scale_x_continuous(breaks = alpha, limits = range(alpha)) +
+    ggplot2::scale_x_continuous(breaks = alpha, limits = range(alpha),labels = scales::number_format(accuracy = 0.001)) +
     ggplot2::facet_wrap(~title) +
-    ggplot2::labs(x=quote(alpha), y="")
+    ggplot2::labs(x=quote(alpha), y="")+
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45,hjust = 1))
 
   # Monitoring proportion of doubtful assignment
 
@@ -142,7 +143,8 @@ first_step_monitoring_CWRM <-
     ggplot2::geom_point(ggplot2::aes(y = DF_CWM), col="black") +
     ggplot2::scale_x_continuous(breaks = alpha, labels = scales::number_format(accuracy = 0.001)) +
     ggplot2::facet_wrap(~title) +
-    ggplot2::labs(x=quote(alpha), y="", color=" ")
+    ggplot2::labs(x=quote(alpha), y="", color=" ") +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45,hjust = 1))
 
   if(what=="everything") {
     print(list(gg_mix,

@@ -846,7 +846,7 @@ solutions_ranking_identifier_LIGHTER <-
             ARI_with_best = mclust::adjustedRandIndex(x = model$assig,
                                                       y = current_optimal_solution$model[[1]]$assig),
             is_best_interval = ifelse(
-              (rank_solution < slice(df_optimal_solutions, (rank_best_mod + 1))$rank_solution
+              (rank_solution < dplyr::slice(df_optimal_solutions, (rank_best_mod + 1))$rank_solution
               ) & (num_groups == current_optimal_solution$num_groups) & !(is_stable),
               TRUE,
               is_best_interval
@@ -890,7 +890,7 @@ solutions_ranking_identifier_LIGHTER <-
 
     OUT <-
       list(
-        optimal_solutions = df_optimal_solutions,
+        optimal_solutions = dplyr::select(df_optimal_solutions,1:6),
         df_for_plotting = df_4_plot_cars
       )
 

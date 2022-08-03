@@ -147,17 +147,17 @@ first_step_monitoring_CWRM <-
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45,hjust = 1))
 
   if(what=="everything") {
-    print(list(gg_mix,
+    list(gg_mix,
     gg_param,
     gg_ARI_05_y,
-    gg_doubtful_assignment))
+    gg_doubtful_assignment)
   } else if (what == "groups_proportion") {
-    print(gg_mix)
+    gg_mix
   } else if (what == "line_plots_parameters") {
-    print(gg_param)
+    gg_param
   } else if (what == "ARI") {
-    print(gg_ARI_05_y)
+    gg_ARI_05_y
   } else if (what == "prop_doubtful_assignment") {
-    print(gg_doubtful_assignment)
+    gg_doubtful_assignment
   }
 }

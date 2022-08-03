@@ -55,7 +55,7 @@ second_step_monitoring_CWRM <-
       ggplot2::labs(x = quote(c[X]),
            y = quote(c[y]),
            fill = "Optimal solutions") +
-      ggplot2::guides(alpha = FALSE) +
+      ggplot2::guides(alpha = "none") +
       ggplot2::facet_wrap ( ~ num_groups, nrow = 1) +
       ggplot2::scale_fill_brewer(
         palette = "Dark2",

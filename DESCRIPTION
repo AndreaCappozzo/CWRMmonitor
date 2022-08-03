@@ -12,6 +12,7 @@ RoxygenNote: 7.2.1
 Imports: 
     depth,
     dplyr,
+    forcats,
     ggplot2,
     magrittr,
     MASS,
@@ -20,6 +21,7 @@ Imports:
     mvtnorm,
     plyr,
     purrr,
+    readr,
     scales,
     stats,
     tibble,

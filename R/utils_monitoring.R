@@ -131,6 +131,20 @@ dCWM_KL <- function(yX, tau, beta, mu, Sigma, sigma, log = FALSE) {
 
 # Function for relabeling via max density ---------------------------------
 
+#' Title
+#'
+#' @param y
+#' @param X
+#' @param tau
+#' @param beta
+#' @param mu
+#' @param Sigma
+#' @param sigma
+#'
+#' @return
+#' @export
+#'
+#' @examples
 estep_CWM <- function(y, X, tau, beta, mu, Sigma, sigma) {
   G <- ncol(mu)
   p <- nrow(mu)

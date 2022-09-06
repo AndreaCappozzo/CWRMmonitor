@@ -34,46 +34,13 @@ pnlt_term<-function(c1,c2,k,p){
 #'
 #' @examples
 var_dec<-function(a,Y,X){
-  # in a$czise we have  sumCols(z_ij)
-  rob_mean_Y<-mean(Y*rowSums(a$z_ij))*length(Y)/length(which(rowSums(a$z_ij)==1))
-  #  iter$center[k,] = (t(a$z_ij[,k]) %*% Y) / iter$csize[k]
-  means_y_g = (t(a$z_ij) %*% Y) / a$csize
-  #  means_y_g <- a$b[,1] + a$center * a$b[,2]
-  K<-length(a$cw)
-  sc_mu_j_da_mu<-as.matrix(means_y_g-rep(rob_mean_Y,K),dim=c(1,K))
-  BSS<- sum((sc_mu_j_da_mu)^2 * a$csize)
-  #  X1<-cbind(rep(1,length(X)),X)
-  #  explained<-X1 %*% t(a$b)- rep(1,length(X)) %*% t(means_y_g)
-  #  explained^2
-  one=matrix(1,nrow=length(Y),ncol=1)
-  X1=cbind(one,X)
-  #\mu(x_i;\hat(beta)_g) in formula 30
-  # beta_0g+beta_1g'x
-  forESS<-one%*%t(means_y_g)-X1%*%t(a$b)
-  EWSS<-sum(a$z_ij*(forESS^2))
-  #primo modo per calcolare gli errori
-  onek<-rep(1,K)
-  err=Y%*%t(onek)-X1%*%t(a$b)
-  RWSS<-sum(a$z_ij*(err^2))
-  # secondo modo per calcolare gli errori
-  residual<-Y %*% t(rep(1,K))-X1 %*% t(a$b)
-  # sono uguali gli errori=scarti residui?
-  # sum(abs(residual-err))
-  # cbind(Y,X1 %*% t(a$b),a$z_ij)[1:5,]
-  scartirob<-(Y-rob_mean_Y)^2*rowSums(a$z_ij)
-  # cbind((Y-mean(Y))^2,rowSums(a$z_ij))
-  TSS<-sum(scartirob)
-  devtot<-stats::var(Y)*(length(Y)-1)
-  # devtot
-  # TSS
-  # BSS  # the soft between sum of squares
-  # # (variability of Y explained by the latent group variable)
-  # # BSS can be seen as a separation measure along the Y axis
-  # EWSS  # the soft within-group sum of squares explained
-  # # by the model (thanks to the covariates)
-  # RWSS  # the soft residual within-group sum of squares can
-  # # WSS=EWSS+RWSS can be seen as a compactness measure
-  # BSS+EWSS+RWSS
-  # TSS-(BSS+EWSS+RWSS)
-  return(c(BSS,EWSS,RWSS))
+  y_bar <- stats::weighted.mean(x = Y,w = rowSums(a$z_ij))
+  y_bar_g <- mclust::covw(X = Y,Z = a$z_ij,normalize = F)$mean # vector of 1 x G
+  BSS <- sum(a$csize*(y_bar_g-y_bar)^2)
+  mu_xi_beta_G <- apply(a$b,1,function(beta) beta%*%t(cbind(1,X)))
+  EWSS <- sum(sweep(mu_xi_beta_G,MARGIN = 2,STATS = y_bar_g,FUN = "-")^2*a$z_ij)
+  RWSS <- sum((Y-mu_xi_beta_G)^2*a$z_ij)
+  # TSS <- sum((Y-y_bar)^2)
+  # c(BSS=BSS,EWSS=EWSS,RWSS=RWSS, TSS=TSS)
+  c(BSS=BSS,EWSS=EWSS,RWSS=RWSS)
 }

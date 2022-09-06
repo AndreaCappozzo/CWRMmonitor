@@ -52,16 +52,9 @@ model_list_builder <-
       dplyr::mutate(
         TBIC = -2 * model$obj +
           pnlt_term(restr_factor_X, restr_factor_Y, num_groups, p = p_x) *
-          log(N * (1 - trim_level)),
-        decomp = ifelse(is.na(model$obj), list(rep(NA,3)),list(var_dec(
-          a = model, Y = df_CWM$y, X = as.matrix(df_CWM[,-1])
-        ))),
-        BSS = decomp[1],
-        EWSS = decomp[2],
-        RWSS = decomp[3],
-        R = EWSS / (EWSS + RWSS)
+          log(N * (1 - trim_level))
       ) %>%
-      dplyr::select(-decomp) %>%
+      # dplyr::select(-decomp) %>%
       dplyr::ungroup()
   }
 

@@ -13,7 +13,6 @@ compute_CWRM_discr_factor <- function(data,CWRM_model){
   N <- nrow(data)
 
   G_max <- ifelse(length(CWRM_model$cw)>=3,length(CWRM_model$cw),3) # to avoid unnecessary warnings when defining the palette
-  N <- length(best_alpha_wise$model[[1]]$assig)
   color_palette_set_2 <- RColorBrewer::brewer.pal(n=G_max,name = "Set2")
 
   cluster_prop_colors <- c("0"="black",color_palette_set_2)
@@ -59,7 +58,7 @@ compute_CWRM_discr_factor <- function(data,CWRM_model){
     dplyr::group_by(name) %>%
     dplyr::mutate(
       value = ifelse(value <= stats::median(value), stats::median(value), value),
-      DF_is_tresh = ifelse(value <= median(value), "yes", "no")
+      DF_is_tresh = ifelse(value <= stats::median(value), "yes", "no")
     ) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(name=forcats::fct_relevel(.f = factor(name),"DF[X]",after = 2))

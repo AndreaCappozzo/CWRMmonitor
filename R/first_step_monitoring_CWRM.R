@@ -40,14 +40,21 @@ first_step_monitoring_CWRM <-
     dplyr::select(trim_level, dplyr::starts_with("csize_relabeled")) %>%
     tidyr::pivot_longer(-trim_level) %>%
     dplyr::mutate(name=factor(as.numeric(stringr::str_extract(name,".$"))-1), title="Groups proportion") %>%
-    ggplot2::ggplot(ggplot2::aes(x=trim_level,y=value,fill=name)) +
-    ggplot2::geom_col() +
+    ggplot2::ggplot(ggplot2::aes(x=trim_level,y=value,fill=name,pattern_angle=name)) +
+    ggpattern::geom_col_pattern(pattern_fill="white", pattern_color="white", pattern_spacing=.05,pattern_density=.2,pattern_size=.001) +
     ggplot2::facet_wrap(~title) +
     ggplot2::scale_x_continuous(breaks = alpha,labels = scales::number_format(accuracy = 0.001)) +
-    ggplot2::labs(x=quote(alpha), y="", fill="G") +
-    ggplot2::scale_fill_manual(breaks = names(cluster_prop_colors[-1]), values = cluster_prop_colors,
+    ggplot2::labs(x=quote(alpha), y="", fill="G",pattern_angle="G") +
+    ggplot2::scale_fill_manual(breaks = names(cluster_prop_colors), values = cluster_prop_colors,
     ) +
-    ggplot2::theme(legend.position = "bottom",axis.text.x = ggplot2::element_text(angle = 45,hjust = 1))
+    ggplot2::scale_color_manual(breaks = names(cluster_prop_colors), values = cluster_prop_colors,
+    ) +
+    ggpattern::scale_pattern_angle_manual(
+      breaks = names(cluster_prop_colors),
+      values = seq(0, 270, length.out = dplyr::n_distinct(cluster_prop_colors))
+    ) +
+    ggplot2::guides(pattern = "none") +
+    ggplot2::theme(legend.position = "bottom",axis.text.x = ggplot2::element_text(angle = 45,hjust = 1),legend.key.size = ggplot2::unit(.8, 'cm'))
 
   BETA_df <- vector(mode = "list",length = ncol(best_alpha_wise$model[[1]]$b))
 
@@ -81,12 +88,12 @@ first_step_monitoring_CWRM <-
     dplyr::mutate(name_minus_last=substring(name,1, nchar(name)-1),param=dplyr::case_when(stringr::str_detect(name,pattern = "b\\[g\\]\\^")~name_minus_last,
                                          stringr::str_detect(name,pattern = "Beta0") ~ "b[g]^0",
                                          stringr::str_detect(name,pattern = "sigma_regr")~"sigma[g]",
-                                         stringr::str_detect(name,pattern = "det_sigma")~"abs(Sigma[g])^{1/d}"),
+                                         stringr::str_detect(name,pattern = "det_sigma")~"sqrt(abs(Sigma[g]),d)"),
            group=stringr::str_extract(string = name,pattern = ".$"))
 
 
   gg_param <- param_df %>%
-    dplyr::mutate(param=forcats::fct_relevel(.f = param,"abs(Sigma[g])^{1/d}",after = Inf)) %>%
+    dplyr::mutate(param=forcats::fct_relevel(.f = param,"sqrt(abs(Sigma[g]),d)",after = Inf)) %>%
     ggplot2::ggplot(ggplot2::aes(trim_level,value, group=group, col=group)) +
     ggplot2::geom_point() +
     ggplot2::geom_line(ggplot2::aes(lty=group)) +

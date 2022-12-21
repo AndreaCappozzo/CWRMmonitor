@@ -8,9 +8,9 @@
 
 R package providing graphical and computational tools to guide parameter
 choice for the cluster weighted robust model. Associated paper Cappozzo,
-Garcìa Escudero, Greselin, Mayo-Iscar (2022+) Graphical and
-computational tools to guide parameter choice for the cluster weighted
-robust model.
+Garcìa Escudero, Greselin, Mayo-Iscar (2022) Graphical and computational
+tools to guide parameter choice for the cluster weighted robust model.
+<https://www.tandfonline.com/doi/abs/10.1080/10618600.2022.2154218>
 
 ## Installation
 
@@ -25,6 +25,6 @@ devtools::install_github("AndreaCappozzo/CWRMmonitor")
 ## Package usage
 
 A tutorial on how to use the package can be found in the supplementary
-material of Cappozzo, Garcìa Escudero, Greselin, Mayo-Iscar (2022+)
+material of Cappozzo, Garcìa Escudero, Greselin, Mayo-Iscar (2022)
 Graphical and computational tools to guide parameter choice for the
 cluster weighted robust model.
